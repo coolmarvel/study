@@ -21,13 +21,17 @@ const MyAnimal = (props) => {
       const balanceLength = await mintAnimalTokenContract.methods
         .balanceOf(accounts[0]) // 특정 계정이 가진 토큰이 몇개인지 반환하는 메서드
         .call();
+
       if (balanceLength === "0") return;
 
-      let tempAnimalCardArray = []; // 사용자의 동물타입 받아서 담을 임시배열
+      const tempAnimalCardArray = []; // 사용자의 동물타입 받아서 담을 임시배열
 
+      console.log(111);
+      console.log("account", accounts);
       const response = await mintAnimalTokenContract.methods
         .getAnimalTokens(accounts[0])
         .call();
+
       response.map((v) => {
         tempAnimalCardArray.push({
           animalTokenId: v.animalTokenId,
@@ -38,17 +42,21 @@ const MyAnimal = (props) => {
       // 동물타입 담은 배열 useState로 담기
       setAnimalCardArray(tempAnimalCardArray);
     } catch (error) {
+      console.log(555);
       console.log(error);
     }
   };
+
   // 판매상태를 불러오는 함수
   const getIsApprovedForAll = async () => {
     try {
+      console.log(333);
       const response = await mintAnimalTokenContract.methods
         // 내 계정이 배포된 스마트컨트랙트(SaleAnimalToken)에게
         // 사용 허가를 받았는지 여부를 boolean으로 알려주는 메서드
         .isApprovedForAll(accounts[0], saleAnimalTokenAddress)
         .call();
+      console.log(444);
       if (response) {
         // 허가를 받았으면 useState에 담아두기
         setSaleStatus(response);

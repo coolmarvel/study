@@ -14,6 +14,7 @@ contract MintAnimalToken is ERC721Enumerable {
 
     // 토큰id로부터 동물타입을 담을 매핑
     mapping(uint256 => uint256) public animalTypes;
+
     // 동물토큰 정보
     struct AnimalTokenData {
         uint256 animalTokenId; // 토큰id(1,2,3...)
